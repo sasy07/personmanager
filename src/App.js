@@ -4,36 +4,48 @@ import Persons from './components/Person/Persons';
 class App extends Component {
     state = {
         persons: [
-            { id : 1 ,firstName: "ساسان", lastName: "غفوری فرد"},
-            { id : 2 ,firstName: "ندا", lastName: "رشیدی نیا" },
-            { id : 3 ,firstName: "پرند", lastName: "غفوری فرد"}
+            { id: 1, fullName: "ساسان غفوری فرد" },
+            { id: 2, fullName: "ندا رشیدی نیا" },
+            { id: 3, fullName: "پرند غفوری فرد" }
         ],
-        showPersons:false 
+        showPersons: false
     };
-    handleShowPersons =()=>{
-        this.setState({showPersons: !this.state.showPersons});
+    handleShowPersons = () => {
+        this.setState({ showPersons: !this.state.showPersons });
         console.log(this.state.showPersons);
     };
-    handleDeletePerson = id =>{
+    handleDeletePerson = id => {
         const persons = [...this.state.persons];
-        const filteredPersons = persons.filter(p=>p.id !== id);
-        this.setState({persons:filteredPersons});
+        const filteredPersons = persons.filter(p => p.id !== id);
+        this.setState({ persons: filteredPersons });
+    };
+    handleNameChange = (event, id) => {
+        const { persons: allPersons } = this.state;
+        const personIndex = allPersons.findIndex(p => p.id === id);
+        const person = allPersons[personIndex];
+        console.log(event);
+        person.fullName = event.target.value;
+        const persons = [...allPersons];
+        persons[personIndex] = person;
+        this.setState({ persons });
     }
     render() {
-        const { persons ,showPersons} = this.state;
+        const { persons, showPersons } = this.state;
         const styles = {
             textAlign: "center",
             direction: "rtl"
         };
-        const BtnStyle={ 
-            fontFamily:"Shabnam",
-            backgroundColor : "#bbdefb",
-            borderColor:"#0047a1",
-            borderRadius:"0.25rem"
+        const BtnStyle = {
+            fontFamily: "Shabnam",
+            backgroundColor: "#bbdefb",
+            borderColor: "#0047a1",
+            borderRadius: "0.25rem"
         };
-        let person = null ;
-        if(showPersons){
-            person = <Persons persons={persons} personDelete={this.handleDeletePerson}/> ;
+        let person = null;
+        if (showPersons) {
+            person = <Persons persons={persons}
+                personDelete={this.handleDeletePerson}
+                personChange={this.handleNameChange} />;
         };
         return (
             <div style={styles}>

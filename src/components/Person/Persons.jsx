@@ -1,12 +1,12 @@
 import React from 'react';
 import Person from './Person';
-const Persons = ({ persons , personDelete}) => {
+const Persons = ({ persons, personDelete, personChange }) => {
     return (<div>
         {persons.map(person => (
             <Person key={person.id}
-                firstName={person.firstName}
-                lastName={person.lastName} 
-                personDelete = {()=>personDelete(person.id)}/>
+                fullName={person.fullName}
+                personDelete={() => personDelete(person.id)}
+                personChange={(event) => personChange(event, person.id)} />
         ))}
     </div>);
 }
