@@ -7,18 +7,15 @@ class App extends Component {
         person: '',
         showPersons: true
     };
-
     handleShowPersons = () => {
         this.setState({showPersons: !this.state.showPersons});
         console.log(this.state.showPersons);
     };
-
     handleDeletePerson = id => {
         const persons = [...this.state.persons];
         const filteredPersons = persons.filter(p => p.id !== id);
         this.setState({persons: filteredPersons});
     };
-
     handleNameChange = (event, id) => {
         const {persons: allPersons} = this.state;
         const personIndex = allPersons.findIndex(p => p.id === id);
@@ -42,7 +39,6 @@ class App extends Component {
             this.setState({persons, person: ""});
         }
     };
-
     setPerson = event => {
         this.setState({person: event.target.value});
         console.log(this.state.person);
@@ -50,8 +46,11 @@ class App extends Component {
 
     render() {
         const {persons, showPersons} = this.state;
-
         let person = null;
+        let badgeStyle=[];
+        if(persons.length>=3) badgeStyle.push("badge-success")
+        if(persons.length<=2) badgeStyle.push("badge-warning")
+        if(persons.length<=1) badgeStyle.push("badge-danger")
         if (showPersons) {
             person = (
                 <Persons persons={persons}
@@ -59,14 +58,13 @@ class App extends Component {
                          personChange={this.handleNameChange}/>
             );
         }
-
         return (
             <div className="rtl text-center">
                 <div className="alert alert-info">
                     <h3>مدیریت اشخاص</h3>
                 </div>
                 <h5 className="alert alert-light">تعداد اشخاص <span
-                    className="badge badge-success badge-pill">{persons.length}</span> میباشد .</h5>
+                    className={`badge badge-pill ${badgeStyle.join(' ')}`}>{persons.length}</span> میباشد .</h5>
                 <div className="m-2 p-2">
                     <form className="form-inline justify-content-center" onSubmit={event => event.preventDefault()}>
                         <div className="input-group w-25">
@@ -85,7 +83,9 @@ class App extends Component {
 
                     </form>
                 </div>
-                <button className="btn btn-sm btn-info fa fa-list" onClick={this.handleShowPersons}>نمایش افراد</button>
+                <button className={showPersons ? "btn btn-sm btn-info fa fa-list" : "btn btn-sm btn-danger fa fa-list"}
+                        onClick={this.handleShowPersons}>نمایش افراد
+                </button>
                 {person}
             </div>
         );
