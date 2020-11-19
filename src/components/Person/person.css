@@ -1,0 +1,19 @@
+.person{
+    width: 40%;
+    border: 2px solid darkgray ;
+    border-radius: 1em;
+    margin: 1em auto;
+    padding: 1em;
+
+    background-color: whitesmoke;
+    direction: rtl;
+}
+
+.btnDelete {
+    background-color: rgb(255, 190, 179);
+    border: 1px solid darkred;
+    color: darkred;
+    height: 2rem;
+    border-radius: 0.5em;
+    margin-right: 1em;
+}

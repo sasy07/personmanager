@@ -10,25 +10,31 @@ class App extends Component {
         ],
         showPersons: false
     };
+
     handleShowPersons = () => {
         this.setState({ showPersons: !this.state.showPersons });
         console.log(this.state.showPersons);
     };
+
     handleDeletePerson = id => {
         const persons = [...this.state.persons];
         const filteredPersons = persons.filter(p => p.id !== id);
         this.setState({ persons: filteredPersons });
     };
+
     handleNameChange = (event, id) => {
         const { persons: allPersons } = this.state;
         const personIndex = allPersons.findIndex(p => p.id === id);
         const person = allPersons[personIndex];
-        console.log(event);
         person.fullName = event.target.value;
+
+        console.log(event);
+        
         const persons = [...allPersons];
         persons[personIndex] = person;
         this.setState({ persons });
-    }
+    };
+
     render() {
         const { persons, showPersons } = this.state;
         const styles = {

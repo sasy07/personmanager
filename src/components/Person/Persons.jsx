@@ -5,8 +5,8 @@ const Persons = ({ persons, personDelete, personChange }) => {
         {persons.map(person => (
             <Person key={person.id}
                 fullName={person.fullName}
-                personDelete={() => personDelete(person.id)}
-                personChange={(event) => personChange(event, person.id)} />
+                deleted={() => personDelete(person.id)}
+                changed={(event) => personChange(event, person.id)} />
         ))}
     </div>);
 }
