@@ -54,23 +54,20 @@ class App extends Component {
     render() {
         const {persons, showPersons} = this.state;
         const styles = {
-            textAlign: "center",
-            direction: "rtl"
+            "textAlign": "center",
+            "direction": "rtl"
         };
         const BtnStyle = {
-            fontFamily: "Shabnam",
-            backgroundColor: "#bbdefb",
-            borderColor: "#0047a1",
-            borderRadius: "0.25rem"
-        };
-        const AddBtnStyle = {
-            backgroundColor: "#75AF96",
-            border: "1px solid #003A21",
+            "fontFamily": "Shabnam",
+            "backgroundColor": "#bbdefb",
+            "borderColor": "#0047a1",
+            "border": "2px solid #003A21",
             "color": "#003A21",
             "height": "2rem",
             "borderRadius": "0.5em",
             "marginRight": "1em"
         };
+
         const AddPersonDiv = {
             "width": "40%",
             "border": "2px solid darkgray",
@@ -99,7 +96,7 @@ class App extends Component {
                         onChange={this.setPerson}
                         value={this.state.person}
                     />
-                    <button style={AddBtnStyle} onClick={this.handleNewPerson}>اضافه کن</button>
+                    <button className="btn btn-sm btn-success fa fa-plus fa-plus-square" onClick={this.handleNewPerson}/>
                 </div>
                 <button style={BtnStyle} onClick={this.handleShowPersons}>نمایش افراد</button>
                 {person}
