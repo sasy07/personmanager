@@ -53,52 +53,42 @@ class App extends Component {
 
     render() {
         const {persons, showPersons} = this.state;
-        const styles = {
-            "textAlign": "center",
-            "direction": "rtl"
-        };
-        const BtnStyle = {
-            "fontFamily": "Shabnam",
-            "backgroundColor": "#bbdefb",
-            "borderColor": "#0047a1",
-            "border": "2px solid #003A21",
-            "color": "#003A21",
-            "height": "2rem",
-            "borderRadius": "0.5em",
-            "marginRight": "1em"
-        };
 
-        const AddPersonDiv = {
-            "width": "40%",
-            "border": "2px solid darkgray",
-            "borderRadius": "1em",
-            "margin": "1em auto",
-            "padding": "1em",
-            "backgroundColor": "whitesmoke",
-            "direction": "rtl"
-        }
         let person = null;
         if (showPersons) {
-            person = <Persons persons={persons}
-                              personDelete={this.handleDeletePerson}
-                              personChange={this.handleNameChange}/>
+            person = (
+                <Persons persons={persons}
+                         personDelete={this.handleDeletePerson}
+                         personChange={this.handleNameChange}/>
+            );
         }
-        ;
-        return (
-            <div style={styles}>
-                <h2>مدیریت اشخاص</h2>
-                <h3>تعداد اشخاص {persons.length} میباشد .</h3>
-                <div style={AddPersonDiv}>
-                    <input
-                        type="text"
-                        placeholder="ساخت شخص جدید"
 
-                        onChange={this.setPerson}
-                        value={this.state.person}
-                    />
-                    <button className="btn btn-sm btn-success fa fa-plus fa-plus-square" onClick={this.handleNewPerson}/>
+        return (
+            <div className="rtl text-center">
+                <div className="alert alert-info">
+                    <h3>مدیریت اشخاص</h3>
                 </div>
-                <button style={BtnStyle} onClick={this.handleShowPersons}>نمایش افراد</button>
+                <h5 className="alert alert-light">تعداد اشخاص <span
+                    className="badge badge-success badge-pill">{persons.length}</span> میباشد .</h5>
+                <div className="m-2 p-2">
+                    <form className="form-inline justify-content-center" onSubmit={event => event.preventDefault()}>
+                        <div className="input-group w-25">
+                            <input
+                                type="text"
+                                className="form-control"
+                                placeholder="اسم بهم بده"
+                                onChange={this.setPerson}
+                                value={this.state.person}
+                            />
+                            <div className="input-group-prepend">
+                                <button type="submit" className="btn btn-sm btn-success fa fa-plus fa-plus-square"
+                                        onClick={this.handleNewPerson}/>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <button className="btn btn-sm btn-info" onClick={this.handleShowPersons}>نمایش افراد</button>
                 {person}
             </div>
         );
