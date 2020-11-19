@@ -37,13 +37,10 @@ class App extends Component {
             id: Math.floor(Math.random() * 1000),
             fullName: this.state.person
         };
-        console.log(persons);
-        console.log(person);
-
-        persons.push(person);
-        console.log(persons);
-
-        this.setState({persons, person: ""});
+        if (person.fullName !== "" && person.fullName !== ' ') {
+            persons.push(person);
+            this.setState({persons, person: ""});
+        }
     };
 
     setPerson = event => {
@@ -88,7 +85,7 @@ class App extends Component {
 
                     </form>
                 </div>
-                <button className="btn btn-sm btn-info" onClick={this.handleShowPersons}>نمایش افراد</button>
+                <button className="btn btn-sm btn-info fa fa-list" onClick={this.handleShowPersons}>نمایش افراد</button>
                 {person}
             </div>
         );
