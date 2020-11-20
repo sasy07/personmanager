@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Persons from './components/Person/Persons';
+import {Alert, Badge, Button} from 'react-bootstrap';
 
 class App extends Component {
     state = {
@@ -47,10 +48,10 @@ class App extends Component {
     render() {
         const {persons, showPersons} = this.state;
         let person = null;
-        let badgeStyle=[];
-        if(persons.length>=3) badgeStyle.push("badge-success")
-        if(persons.length<=2) badgeStyle.push("badge-warning")
-        if(persons.length<=1) badgeStyle.push("badge-danger")
+        let badgeStyle = '';
+        if (persons.length >= 3) badgeStyle = "success";
+        if (persons.length <= 2) badgeStyle = "warning";
+        if (persons.length <= 1) badgeStyle = "danger";
         if (showPersons) {
             person = (
                 <Persons persons={persons}
@@ -60,11 +61,18 @@ class App extends Component {
         }
         return (
             <div className="rtl text-center">
-                <div className="alert alert-info">
+                <Alert variant="info">
                     <h3>مدیریت اشخاص</h3>
-                </div>
-                <h5 className="alert alert-light">تعداد اشخاص <span
-                    className={`badge badge-pill ${badgeStyle.join(' ')}`}>{persons.length}</span> میباشد .</h5>
+                </Alert>
+                <Alert variant="light">
+                    تعداد اشخاص
+                    <Badge pill
+                           variant={`${badgeStyle}`}>
+                        {persons.length}
+                    </Badge>
+                    میباشد .
+                </Alert>
+
                 <div className="m-2 p-2">
                     <form className="form-inline justify-content-center" onSubmit={event => event.preventDefault()}>
                         <div className="input-group w-25">
@@ -76,16 +84,19 @@ class App extends Component {
                                 value={this.state.person}
                             />
                             <div className="input-group-prepend">
-                                <button type="submit" className="btn btn-sm btn-success fa fa-plus fa-plus-square"
+                                <Button type="submit"
+                                        className="fa fa-plus fa-plus-square"
+                                        size={"sm"}
+                                        variant={"success"}
                                         onClick={this.handleNewPerson}/>
                             </div>
                         </div>
 
                     </form>
                 </div>
-                <button className={showPersons ? "btn btn-sm btn-info fa fa-list" : "btn btn-sm btn-danger fa fa-list"}
+                <Button className="fa fa-list" variant={showPersons ? "info" : "danger"}
                         onClick={this.handleShowPersons}>نمایش افراد
-                </button>
+                </Button>
                 {person}
             </div>
         );
