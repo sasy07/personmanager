@@ -5,3 +5,7 @@ body{
     font-family: "Shabnam";
 
 }
+.Toastify__toast {
+    direction: rtl !important;
+    font-family: "Shabnam" !important; 
+}

@@ -1,6 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Persons from './components/Person/Persons';
-import {Alert, Badge, Button} from 'react-bootstrap';
+import { toast, ToastContainer } from "react-toastify";
+import { Alert, Badge, Button } from 'react-bootstrap';
 
 class App extends Component {
     state = {
@@ -9,25 +10,31 @@ class App extends Component {
         showPersons: true
     };
     handleShowPersons = () => {
-        this.setState({showPersons: !this.state.showPersons});
+        this.setState({ showPersons: !this.state.showPersons });
         console.log(this.state.showPersons);
     };
     handleDeletePerson = id => {
         const persons = [...this.state.persons];
         const filteredPersons = persons.filter(p => p.id !== id);
-        this.setState({persons: filteredPersons});
+
+        const personIndex = persons.findIndex(p => p.id === id);
+        const person = persons[personIndex];
+
+        this.setState({ persons: filteredPersons });
+        toast.error(`${person.fullName} با موفقیت حذف شد .`, {
+            position: "bottom-right",
+            closeButton: true,
+            closeOnClick: true
+        });
     };
     handleNameChange = (event, id) => {
-        const {persons: allPersons} = this.state;
+        const { persons: allPersons } = this.state;
         const personIndex = allPersons.findIndex(p => p.id === id);
         const person = allPersons[personIndex];
         person.fullName = event.target.value;
-
-        console.log(event);
-
         const persons = [...allPersons];
         persons[personIndex] = person;
-        this.setState({persons});
+        this.setState({ persons });
     };
     handleNewPerson = () => {
         const persons = [...this.state.persons];
@@ -37,16 +44,21 @@ class App extends Component {
         };
         if (person.fullName !== "" && person.fullName !== ' ') {
             persons.push(person);
-            this.setState({persons, person: ""});
+            this.setState({ persons, person: "" });
+            toast.success("با موفقیت اضافه شد .", {
+                position: "bottom-right",
+                closeButton: true,
+                closeOnClick: true
+            });
         }
     };
     setPerson = event => {
-        this.setState({person: event.target.value});
+        this.setState({ person: event.target.value });
         console.log(this.state.person);
     };
 
     render() {
-        const {persons, showPersons} = this.state;
+        const { persons, showPersons } = this.state;
         let person = null;
         let badgeStyle = '';
         if (persons.length >= 3) badgeStyle = "success";
@@ -55,8 +67,8 @@ class App extends Component {
         if (showPersons) {
             person = (
                 <Persons persons={persons}
-                         personDelete={this.handleDeletePerson}
-                         personChange={this.handleNameChange}/>
+                    personDelete={this.handleDeletePerson}
+                    personChange={this.handleNameChange} />
             );
         }
         return (
@@ -67,7 +79,7 @@ class App extends Component {
                 <Alert variant="light">
                     تعداد اشخاص
                     <Badge pill
-                           variant={`${badgeStyle}`}>
+                        variant={`${badgeStyle}`}>
                         {persons.length}
                     </Badge>
                     میباشد .
@@ -85,19 +97,20 @@ class App extends Component {
                             />
                             <div className="input-group-prepend">
                                 <Button type="submit"
-                                        className="fa fa-plus fa-plus-square"
-                                        size={"sm"}
-                                        variant={"success"}
-                                        onClick={this.handleNewPerson}/>
+                                    className="fa fa-plus fa-plus-square"
+                                    size={"sm"}
+                                    variant={"success"}
+                                    onClick={this.handleNewPerson} />
                             </div>
                         </div>
 
                     </form>
                 </div>
                 <Button className="fa fa-list" variant={showPersons ? "info" : "danger"}
-                        onClick={this.handleShowPersons}>نمایش افراد
+                    onClick={this.handleShowPersons}>نمایش افراد
                 </Button>
                 {person}
+                <ToastContainer />
             </div>
         );
     }
